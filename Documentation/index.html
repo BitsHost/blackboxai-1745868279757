@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>upMVC Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'var(--text-primary)',
+                        background: 'var(--bg-primary)',
+                        nav: {
+                            bg: 'var(--nav-bg)',
+                            border: 'var(--nav-border)'
+                        },
+                        code: {
+                            bg: 'var(--code-bg)'
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav {
+            background-color: #f8f9fa;
+            border-color: #e5e7eb;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        pre {
+            overflow-x: auto;
+            background-color: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 1rem;
+            color: #1a1a1a;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        code {
+            background-color: #f3f4f6;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #1a1a1a;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .prose {
+            color: #1a1a1a;
+        }
+        .prose h1, .prose h2, .prose h3, .prose h4 {
+            color: #111827;
+        }
+        .prose p, .prose ul, .prose li {
+            color: #374151;
+        }
+        
+        /* Dark mode styles */
+        .dark body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }
+        .dark nav {
+            background-color: #252526;
+            border-color: #333;
+        }
+        .dark pre, .dark code {
+            background-color: #2d2d2d;
+            border-color: #404040;
+            color: #d4d4d4;
+        }
+        .dark .prose {
+            color: #d4d4d4;
+        }
+        .dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4 {
+            color: #e5e7eb;
+        }
+        .dark .prose p, .dark .prose ul, .dark .prose li {
+            color: #d1d5db;
+        }
+        .dark .bg-white {
+            background-color: #1e1e1e;
+        }
+        .dark .border-gray-200 {
+            border-color: #333;
+        }
+        .dark .text-gray-600, 
+        .dark .text-gray-700,
+        .dark .text-gray-800,
+        .dark .text-gray-900 {
+            color: #d4d4d4;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-64 h-full border-r border-nav-border bg-nav-bg overflow-y-auto">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold mb-1 text-gray-900 dark:text-gray-100">upMVC</h1>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Documentation</p>
+                </div>
+                <button id="theme-toggle" aria-label="Toggle Dark Mode" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 transition-colors flex items-center gap-2">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Theme</span>
+                <svg id="theme-toggle-light-icon" class="w-5 h-5 text-yellow-500 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zM4.22 4.22a1 1 0 011.42 0L6.64 5.22a1 1 0 11-1.42 1.42L4.22 5.64a1 1 0 010-1.42zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm8 6a1 1 0 011-1v-1a1 1 0 10-2 0v1a1 1 0 011 1zm5.78-2.22a1 1 0 00-1.42 0l-1 1a1 1 0 101.42 1.42l1-1a1 1 0 000-1.42zM17 10a1 1 0 00-1-1h-1a1 1 0 100 2h1a1 1 0 001-1zm-2.22-5.78a1 1 0 00-1.42 1.42l1 1a1 1 0 001.42-1.42l-1-1z"></path>
+                </svg>
+                <svg id="theme-toggle-dark-icon" class="w-5 h-5 text-gray-800 dark:text-gray-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293a8 8 0 11-11.586-11.586 8 8 0 0011.586 11.586z"></path>
+                </svg>
+            </button>
+        </div>
+        <ul class="space-y-2 px-4">
+            <li>
+                <a href="index.html" class="flex items-center px-4 py-2 rounded-lg text-primary hover:bg-primary/10 transition-colors">
+                    <i class="fas fa-home mr-3"></i>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="getting-started.html" class="flex items-center px-4 py-2 rounded-lg text-primary hover:bg-primary/10 transition-colors">
+                    <i class="fas fa-rocket mr-3"></i>
+                    Getting Started
+                </a>
+            </li>
+            <li>
+                <a href="advanced.html" class="flex items-center px-4 py-2 rounded-lg text-primary hover:bg-primary/10 transition-colors">
+                    <i class="fas fa-book mr-3"></i>
+                    Advanced
+                </a>
+            </li>
+            <li>
+                <a href="#core-concepts" class="flex items-center px-4 py-2 rounded-lg text-primary hover:bg-primary/10 transition-colors">
+                    <i class="fas fa-cube mr-3"></i>
+                    Core Concepts
+                </a>
+            </li>
+            <li>
+                <a href="modules.html" class="flex items-center px-4 py-2 rounded-lg text-primary hover:bg-primary/10 transition-colors">
+                    <i class="fas fa-puzzle-piece mr-3"></i>
+                    Modules
+                </a>
+            </li>
+            <li>
+                <a href="#routing" class="flex items-center px-4 py-2 rounded-lg text-primary hover:bg-primary/10 transition-colors">
+                    <i class="fas fa-route mr-3"></i>
+                    Routing
+                </a>
+            </li>
+            <li>
+                <a href="#modern-integration" class="flex items-center px-4 py-2 rounded-lg text-primary hover:bg-primary/10 transition-colors">
+                    <i class="fas fa-code mr-3"></i>
+                    Modern Integration
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="ml-64 p-8 bg-background">
+        <div class="max-w-4xl mx-auto prose dark:prose-invert">
+            <!-- Introduction -->
+            <section id="introduction" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Introduction to upMVC</h2>
+                <p class="text-lg mb-4">
+                    upMVC is a powerful, modular MVC system that empowers your PHP development without the complexity of traditional frameworks. It provides a structured, straightforward approach while maintaining the flexibility to integrate modern technologies.
+                </p>
+                <div class="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 p-4 my-6">
+                    <p>
+                        "Many frameworks may look very appealing at first glance because they seem to reduce web application development to a couple of trivial steps, but these same shortcuts are likely to be your bottlenecks since they achieve this simplicity by sacrificing flexibility and performance."
+                    </p>
+                    <p class="text-sm mt-2">- Rasmus Lerdorf</p>
+                </div>
+            </section>
+
+            <!-- Getting Started -->
+            <section id="getting-started" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Getting Started</h2>
+                <h3 class="text-xl font-semibold mb-4">Installation</h3>
+                <pre><code># Install as a library
+composer require bitshost/upmvc:dev-main
+
+# Or install as a project
+composer create-project bitshost/upmvc:dev-main yourFolderNameHere
+</code></pre>
+                <h3 class="text-xl font-semibold mb-4">Basic Configuration</h3>
+                <p class="mb-4">
+                    After installation, you'll need to configure these key files:
+                </p>
+                <ul class="list-disc pl-6 mb-6">
+                    <li>/etc/Config.php - General configuration</li>
+                    <li>/etc/ConfigDatabase.php - Database settings</li>
+                    <li>/modules/mail/MailController.php - Mail configuration</li>
+                </ul>
+            </section>
+
+            <!-- Core Concepts -->
+            <section id="core-concepts" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Core Concepts</h2>
+                <h3 class="text-xl font-semibold mb-4">MMVC Architecture</h3>
+                <p class="mb-4">
+                    MMVC (Modular Model View Controller) is built on these key principles:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                        <h4 class="text-lg font-semibold mb-2 text-primary">Modularity</h4>
+                        <p class="text-primary/90">Work on modules independently without affecting the rest of your project</p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                        <h4 class="text-lg font-semibold mb-2 text-primary">Language Freedom</h4>
+                        <p class="text-primary/90">Write modules in your preferred language - PHP, JS, Python, or modern frameworks</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modules -->
+            <section id="modules" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Working with Modules</h2>
+                <p class="mb-4">
+                    Modules are the building blocks of your application. Each module follows the MVC pattern and can be developed independently.
+                </p>
+                <div class="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 my-6">
+                    <p class="text-yellow-800 dark:text-yellow-200">
+                        <strong>Pro Tip:</strong> Use the BaseModel for quick CRUD operations - simply extend it in your module model.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Routing -->
+            <section id="routing" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Routing System</h2>
+                <p class="mb-4">
+                    upMVC provides a flexible routing system with support for:
+                </p>
+                <ul class="list-disc pl-6 mb-6">
+                    <li>General Routes (/etc/Routes.php)</li>
+                    <li>Module-specific Routes (/modules/yourmodule/routes/Routes.php)</li>
+                    <li>Friendly URLs and aliases</li>
+                    <li>Parameter handling</li>
+                </ul>
+            </section>
+
+            <!-- Modern Integration -->
+            <section id="modern-integration" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Modern Framework Integration</h2>
+                <p class="mb-4">
+                    upMVC supports the "Islands Architecture" - allowing you to integrate modern frameworks like React, Vue, Preact or Svelte within your PHP application.
+                </p>
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
+                    <h4 class="text-lg font-semibold mb-2 text-primary">Islands of Interactivity</h4>
+                    <p class="text-primary/90">
+                        Strategically place interactive components built with modern frameworks within your PHP-generated HTML.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Theme toggle logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        // Initialize theme
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            }
+        }
+
+        // Set initial theme (default to light)
+        const savedTheme = localStorage.getItem('color-theme') || 'light';
+        localStorage.setItem('color-theme', savedTheme);
+        setTheme(savedTheme);
+
+        // Theme toggle handler
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = localStorage.getItem('color-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            localStorage.setItem('color-theme', newTheme);
+            setTheme(newTheme);
+        });
+    </script>
+</body>
+</html>
